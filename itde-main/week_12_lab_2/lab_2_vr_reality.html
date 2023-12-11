@@ -1,0 +1,184 @@
+<!DOCTYPE html> 
+<html> 
+  <head><title>threeJS shaders</title></head> 
+  <body> 
+    <canvas id="Canvas"></canvas> 
+    <script src="https://threejs.org/build/three.js"></script> 
+    <script src="https://raw.githack.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js"></script>
+ 
+    <script> 
+
+        var renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setClearColor(0x333333);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        //renderer.gammaFactor = 2.2;
+        //renderer.gammaOutput = true;
+        //renderer.physicallyCorrectLights = true; 
+        document.body.appendChild(renderer.domElement);
+    
+        var camera=new THREE.PerspectiveCamera(35,  
+                    window.innerWidth / window.innerHeight, 0.1, 3000); 
+    
+        camera.position.set(-20, 1, 20);
+        
+        var scene=new THREE.Scene(); 
+    
+        var lightOne=new THREE.AmbientLight(0xffff, 0.5); 
+        scene.add(lightOne); 
+    
+        var lightTwo=new THREE.PointLight(0xffff, 0.5); 
+        scene.add(lightTwo); 
+
+
+        const geometry_1 = new THREE.TorusGeometry( 0.49, 0.07, 16, 100 );
+        const material_1 = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
+        const torus_1 = new THREE.Mesh( geometry_1, material_1 );
+        torus_1.position.set(-7.453, 2.74252, 6.205);
+        torus_1.rotation.x = -89.56;
+        scene.add( torus_1 );
+    
+        const geometry_2 = new THREE.TorusGeometry( 0.69, 0.11, 16, 100 );
+        const material_2 = new THREE.MeshBasicMaterial( { color: 0xFF7F00 } );
+        const torus_2 = new THREE.Mesh( geometry_2, material_2 );
+        torus_2.position.set(-7.453, 2.44867, 6.205);
+        torus_2.rotation.x = -89.56;
+        scene.add( torus_2 ); 
+        
+        const geometry_3 = new THREE.TorusGeometry( 1.02, 0.11, 16, 100 );
+        const material_3 = new THREE.MeshBasicMaterial( { color: 0xFFFF00 } );
+        const torus_3 = new THREE.Mesh( geometry_3, material_3 );
+        torus_3.position.set(-7.453, 2.16092, 6.205);
+        torus_3.rotation.x = -89.56;
+        scene.add( torus_3 );    
+        
+        const geometry_4 = new THREE.TorusGeometry( 1.33, 0.12, 16, 100 );
+        const material_4 = new THREE.MeshBasicMaterial( { color: 0x00FF00 } );
+        const torus_4 = new THREE.Mesh( geometry_4, material_4 );
+        torus_4.position.set(-7.453, 1.85041, 6.205);
+        torus_4.rotation.x = -89.56;
+        scene.add( torus_4 );
+
+        const geometry_5 = new THREE.TorusGeometry( 1.62, 0.12, 16, 100 );
+        const material_5 = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
+        const torus_5 = new THREE.Mesh( geometry_5, material_5 );
+        torus_5.position.set(-7.453, 1.46458, 6.205);
+        torus_5.rotation.x = -89.56;
+        scene.add( torus_5 );
+        
+        const geometry_6 = new THREE.TorusGeometry( 1.97, 0.13, 16, 100 );
+        const material_6 = new THREE.MeshBasicMaterial( { color: 0xB0082 } );
+        const torus_6 = new THREE.Mesh( geometry_6, material_6 );
+        torus_6.position.set(-7.453, 1.10107, 6.205);
+        torus_6.rotation.x = -89.56;
+        scene.add( torus_6 );
+    
+        const geometry_7 = new THREE.TorusGeometry( 2.32, 0.14, 16, 100 );
+        const material_7 = new THREE.MeshBasicMaterial( { color: 0x9400D3 } );
+        const torus_7 = new THREE.Mesh( geometry_7, material_7 );
+        torus_7.position.set(-7.453, 0.68829, 6.205);
+        torus_7.rotation.x = -89.56;
+        scene.add( torus_7 );
+
+        const geometry_8 = new THREE.CylinderGeometry( 3.46, 3.46, 0.3, 32 );
+        const material_8 = new THREE.MeshBasicMaterial( {color: 0x000000} );
+        const cylinder_1 = new THREE.Mesh( geometry_8, material_8 );
+        cylinder_1.position.set(-7.453, 0.23435, 6.205);
+        scene.add( cylinder_1 );
+
+        const geometry_9 = new THREE.CylinderGeometry( 0.31, 0.31, 3.67, 32 );
+        const material_9 = new THREE.MeshBasicMaterial( {color: 0x000000} );
+        const cylinder_2 = new THREE.Mesh( geometry_9, material_9 );
+        cylinder_2.position.set(-7.481, 2.249, 6.232);
+        scene.add( cylinder_2 );
+
+        const geometry_10 = new THREE.CylinderGeometry( 3.46, 3.46, 0.3, 32 );
+        const material_10 = new THREE.MeshBasicMaterial( {color: 0x000000} );
+        const cylinder_3 = new THREE.Mesh( geometry_10, material_10 );
+        cylinder_3.position.set(-0.04555, 0.23435, 6.205);
+        scene.add( cylinder_3 );
+
+        const geometry_11 = new THREE.CylinderGeometry( 0.31, 0.31, 3.67, 32 );
+        const material_11 = new THREE.MeshBasicMaterial( {color: 0x000000} );
+        const cylinder_4 = new THREE.Mesh( geometry_11, material_11 );
+        cylinder_4.position.set(-0.01562, 2.249, 6.232);
+        scene.add( cylinder_4 );
+
+        const geometry_12 = new THREE.CylinderGeometry( 3.46, 3.46, 0.3, 32 );
+        const material_12 = new THREE.MeshBasicMaterial( {color: 0x000000} );
+        const cylinder_5 = new THREE.Mesh( geometry_12, material_12 );
+        cylinder_5.position.set(7.35332, 0.23435, 6.205);
+        scene.add( cylinder_5 );
+
+        const geometry_13 = new THREE.CylinderGeometry( 0.31, 0.31, 3.67, 32 );
+        const material_13 = new THREE.MeshBasicMaterial( {color: 0x000000} );
+        const cylinder_6 = new THREE.Mesh( geometry_13, material_13 );
+        cylinder_6.position.set(7.45874, 2.249, 6.232);
+        scene.add( cylinder_6 );        
+
+        let hanoi_tower = [torus_1, torus_2, torus_3, torus_4, torus_5, torus_6, torus_7]; 
+        let speed = [0.2, 0.17, 0.14, 0.11, 0.07, 0.05, 0.03]; 
+        let Oy_init = [2.74252, 2.44867, 2.16092, 1.85041, 1.46458, 1.10107, 0.68829]; 
+        let Ox_init = -7.453; 
+        let Ox_right = [7.456, -0.024]; 
+        let Oy_up = 5; 
+
+
+        controls = new THREE.OrbitControls(camera,renderer.domElement); 
+
+        function render(){ 
+
+          for(var i = 0; i < hanoi_tower.length; i++) {
+
+            torus_i = hanoi_tower[i] 
+
+            torus_i_position = torus_i.position; 
+
+            dt = speed[i];
+
+            if ((torus_i_position.x == Ox_init) && (torus_i_position.y <= Oy_up)) {
+                torus_i_position.y += dt;
+            }
+
+            if (torus_i_position.y >= Oy_up) {
+                
+                torus_i_position.y = Oy_up;
+                torus_i_position.x += dt;
+            }
+
+            if (i % 2 == 0) {
+                if (torus_i_position.x >= Ox_right[0]) {
+                    torus_i_position.x = Ox_right[0];
+
+                    if (torus_i_position.y >= Oy_init[i]) {
+                        torus_i_position.y -= dt;
+                    }
+
+                }
+
+            } else {
+                if (torus_i_position.x >= Ox_right[1]) {
+                    torus_i_position.x = Ox_right[1];
+                    
+                }
+
+                if (torus_i_position.y >= Oy_init[i] && torus_i_position.x == Ox_right[1]) {
+                        torus_i_position.y -= dt;
+                        
+                }
+
+              }
+
+            }
+
+            controls.update();
+            requestAnimationFrame(render); 
+            renderer.render(scene, camera);
+        } 
+
+        requestAnimationFrame(render);
+
+    </script> 
+  </body> 
+</html> 
+  

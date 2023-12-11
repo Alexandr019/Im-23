@@ -1,0 +1,123 @@
+<!DOCTYPE html> 
+<html> 
+  <head><title>LightCamera</title></head> 
+  <body> 
+    <canvas id="Canvas"></canvas>  
+    <script src="https://threejs.org/build/three.js"></script>
+    <a-scene>
+    <script> 
+        var renderer = new THREE.WebGLRenderer({canvas: document.getElementById('Canvas'), antialias: true}); 
+        renderer.setClearColor(0x333333); 
+        renderer.setPixelRatio(window.devicePixelRatio); 
+        renderer.setSize(window.innerWidth, window.innerHeight); 
+        
+        //перспективна камера 
+        var camera=new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 20000); 
+        camera.position.z = 1000; 
+        
+        var scene = new THREE.Scene(); 
+        
+        var conegeometry = new THREE.CylinderGeometry(100,200,100,500); 
+        var conematerial = new THREE.MeshLambertMaterial(); 
+        var conemesh = new THREE.Mesh(conegeometry, conematerial); 
+        conemesh.position.set(-150, -50, -500); 
+        conemesh.rotation.x = -100; 
+        scene.add(conemesh); 
+
+        var spheregeometry = new THREE.SphereGeometry(50, 32, 16); 
+        var spherematerial = new THREE.MeshPhongMaterial({ color: 0x674EA7 });
+        var spheremesh = new THREE.Mesh(spheregeometry, spherematerial);
+        spheremesh.position.set(200, 300, -900);
+        scene.add(spheremesh);
+
+        var spheregeometry2 = new THREE.SphereGeometry(50, 32, 16); 
+        var spherematerial2 = new THREE.MeshPhongMaterial({ color: 0xb24601 });
+        var spheremesh2 = new THREE.Mesh(spheregeometry2, spherematerial2);
+        spheremesh2.position.set(200, 100, -700);
+        scene.add(spheremesh2);
+        
+        var box = new THREE.BoxHelper(spheremesh, 0x674EA7 );
+        scene.add( box );
+
+        var box2 = new THREE.BoxHelper(spheremesh2, 0xb24601 );
+        scene.add( box2 );
+        
+        var cubegeometry = new THREE.BoxGeometry(90, 100, 90, 200); 
+        var cubematerial = new THREE.MeshLambertMaterial(); 
+        var cubemesh = new THREE.Mesh(cubegeometry, cubematerial); 
+        cubemesh.position.set(200, -50, -500); 
+        cubemesh.rotation.x = -100; 
+        scene.add(cubemesh); 
+        
+        var planegeometry = new THREE.PlaneGeometry(900, 500, 300, 900); 
+        var planematerial = new THREE.MeshPhongMaterial( 
+                                            {color: 0x333333}); 
+        var planemesh = new THREE.Mesh(planegeometry, planematerial); 
+        planemesh.position.set(50, -70, -500); 
+        planemesh.rotation.set(-290, 0, 0); 
+        scene.add(planemesh); 
+
+        var lightOne = new THREE.DirectionalLight(0xffff, 0.5, 1000); 
+        lightOne.target = conemesh; 
+        lightOne.castShadow = true; 
+        lightOne.shadow.bias = 0.0001;
+        lightOne.shadow.mapSize.width = 2048 * 2;
+        lightOne.shadow.mapSize.height = 2048 * 2;
+        scene.add(lightOne); 
+
+        var lightHelper = new THREE.DirectionalLightHelper(lightOne, 100); 
+        scene.add(lightHelper);
+
+        conemesh.castShadow = true; 
+        cubemesh.castShadow = true; 
+        planemesh.receiveShadow = true; 
+
+
+        var secondCamera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 20000); 
+        var cameraHelper = new THREE.CameraHelper(secondCamera); 
+        scene.add(cameraHelper);
+
+        requestAnimationFrame(render); 
+        
+        var t = 0;
+        var angle = 0;
+
+        function changeTarget(){
+            if(lightOne.target == conemesh)
+                lightOne.target == cubemesh;
+            else 
+                lightOne.target == conemesh;
+            requestAnimationFrame(render);
+        }
+
+        document.getElementById("Canvas").onclick = changeTarget; 
+
+        function render() { 
+            lightOne.position.y = 300*Math.sin(t);
+            lightOne.position.z = 300*Math.cos(t);
+            t += 0.01;
+            camera.lookAt(lightOne.position);
+            camera.position.x = Math.sin(t) * 2000;
+            camera.position.z = Math.cos(t) * 2000;
+
+            spheremesh.position.x = 300*Math.cos(angle);
+            spheremesh.position.z = 3*Math.sin(angle);
+
+            spheremesh2.position.x = -300*Math.cos(angle);
+            spheremesh2.position.z = -3*Math.sin(angle);
+            
+            angle += 0.01; 
+
+            renderer.render(scene, camera); 
+            renderer.shadowMap.enabled = true; 
+            renderer.shadowMap.type = THREE.PCFShadowMap;
+            lightHelper.update();
+            box.update();
+            box2.update(); 
+            requestAnimationFrame(render); 
+        } 
+
+    </script> 
+    </a-scene>
+  </body> 
+</html> 

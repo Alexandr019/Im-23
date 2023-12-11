@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://umpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+	
+    <script type="text/javascript">
+        window.addEventListener('camera-init', (data) => { 
+            console.log('camera-init', data); 
+        }) 
+        window.addEventListener('camera-error', (error) => { 
+            console.log('camera-error', error); 
+        })
+        
+        AFRAME.registerComponent('registerevents', { 
+            init: function () { 
+                var marker = this.el; 
+                marker.addEventListener('markerFound', function() { 
+                console.log('markerFound', marker.id); }); 
+                marker.addEventListener('markerLost', function() { 
+                console.log('markerLost', marker.id); }); 
+            } 
+        });
+        
+        AFRAME.registerComponent('jump', { 
+            init: function () { 
+                var obj = this.el; 
+                obj.addEventListener('click', function () { 
+                this.setAttribute('position', (Math.random()-0.5)+ " 0.5 0"); });
+            }
+        });
+
+    </script>
+
+		<a-scene embedded vr-mode-ui="enabled: false" arjs ="debugUIEnabled:false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
+			<a-marker preset="hiro" id='marker-hiro' registerevents> 
+                <a-box position='0 0.5 0' material='color: red;' jump></a-box> 
+            </a-marker> 
+            <a-marker preset="kanji" id='marker-kanji' registerevents> 
+                <a-box position='0 0.5 0' material='color: blue;' jump></a-box> 
+            </a-marker>
+            <a-marker type="pattern" url='pattern-eiffel-tower.patt' id='my-marker' registerevents>
+                <a-sphere position="0 0.5 0" radius="0.5" material = "color: green;" jump></a-sphere>
+            </a-marker>
+			<a-entity camera><a-cursor></a-cursor></a-entity>
+		</a-scene>
+</html>

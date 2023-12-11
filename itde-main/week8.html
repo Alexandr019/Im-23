@@ -1,0 +1,128 @@
+<!DOCTYPE html> 
+<html> 
+  <head><title>threeJS shaders</title></head> 
+  <body> 
+    <canvas id="Canvas"></canvas> 
+    <script src="https://threejs.org/build/three.js"></script> 
+ 
+    <script> 
+
+        //Шейдер взято із наступного відео: https://www.youtube.com/watch?v=EjcoAkeI7L4
+        const vertexShader = `
+            // Set the precision for data types used in this shader
+            precision highp float;
+            precision highp int;
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+            }
+        `
+
+        const fragmentShader = `
+            precision highp float;
+            precision highp int;
+            uniform float time;
+            uniform float speed;
+            uniform vec2 charSize;
+            uniform float charResolution;
+            uniform vec3 color;
+            uniform vec2 resolution;
+            varying vec2 vUv;
+            float seed = 2.0;
+            float random( float x ) {
+                return fract( sin( x ) * 43758.5453 );
+            }
+            float random( vec2 st ) {
+                return fract( sin( dot( st.xy, vec2( 12.9898, 78.233 ) ) ) * 43758.5453 );
+            }
+            float randomChar( vec2 outer, vec2 inner ) {
+                vec2 margin = 1.0 - charSize;
+                vec2 borders = step( margin, inner ) * step( margin, 1.0 - inner );
+                return step(
+                    0.5,
+                    random( outer * seed + floor( inner * charResolution ) )
+                ) * borders.x * borders.y;
+            }
+            vec4 matrix( vec2 st ) {
+                float rows = 50.0;
+                vec2 ipos = floor( st * rows ) + vec2( 1.0, 0.0 );
+                ipos += vec2( 0.0, floor( time * speed * random( ipos.x ) ) );
+                vec2 fpos = fract( st * rows );
+                vec2 center = 0.5 - fpos;
+                float pct = random( ipos );
+                float glow = ( 1.0 - dot(center,center) * 3.0 ) * 2.0;
+                float result = randomChar( ipos, fpos ) * pct * glow;
+                return vec4( color * result, result );
+            }
+            void main() {
+                
+                vec2 st = vUv * resolution;
+                gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0) + matrix( st );
+                
+            }
+        `
+        var  renderer = new  THREE.WebGLRenderer({canvas: document.getElementById('Canvas'), antialias: true}); 
+        renderer.setClearColor(0xCBEFFF); 
+        renderer.setPixelRatio(window.devicePixelRatio); 
+        renderer.setSize(window.innerWidth, window.innerHeight); 
+    
+        var camera=new THREE.PerspectiveCamera(35,  
+                    window.innerWidth / window.innerHeight, 0.1, 3000); 
+    
+        var scene=new THREE.Scene(); 
+
+        console.log(fragmentShader);
+    
+        var lightOne=new THREE.AmbientLight(0xffff, 0.5); 
+        scene.add(lightOne); 
+    
+        var lightTwo=new THREE.PointLight(0xffff, 0.5); 
+        scene.add(lightTwo); 
+    
+        const uniforms = {
+            time: {value:0.0},
+            speed:{value:18.0},
+            charSize:{value:{x:2.0, y:1.5}},
+            charResolution:{value:5.5},
+            color:{value: new THREE.Color('green')},
+            resolution:{value:{x:1.0, y:1.0}},
+        }
+
+        const customShaderMaterial = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            fragmentShader: fragmentShader,
+            vertexShader: vertexShader
+            
+        });
+
+
+        var boxgeometry=new THREE.BoxBufferGeometry(100, 100, 100, 
+                                                    10, 10, 10); 
+        var boxmesh=new THREE.Mesh(boxgeometry, customShaderMaterial); 
+        boxmesh.position.set(-100, 0, -1000); 
+        scene.add(boxmesh); 
+    
+        var cubegeometry=new THREE.BoxBufferGeometry(100, 100, 100); 
+        var cubemesh=new THREE.Mesh(cubegeometry, customShaderMaterial); 
+        cubemesh.position.set(150, 0, -1000); 
+        scene.add(cubemesh); 
+    
+        const clock = new THREE.Clock(); 
+
+        function render(){ 
+            
+            cubemesh.rotation.x += 0.01;
+            boxmesh.rotation.z += 0.1;
+
+            requestAnimationFrame(render); 
+            renderer.render(scene, camera);
+            uniforms.time.value = clock.getElapsedTime();
+        } 
+
+        requestAnimationFrame(render);
+
+    </script> 
+  </body> 
+</html> 
+  

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head><title>OBJLoader</title></head>
+    <body>
+        <script src="https://threejs.org/build/three.js"></script>
+        <script src="https://raw.githack.com/mrdoob/three.js/dev/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="https://raw.githack.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js"></script>
+
+        <script>
+
+            var renderer = new THREE.WebGLRenderer({antialias: true});
+            renderer.setClearColor(0x333333);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            //renderer.gammaFactor = 2.2;
+            //renderer.gammaOutput = true;
+            //renderer.physicallyCorrectLights = true; 
+            document.body.appendChild(renderer.domElement);
+
+            var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+            camera.position.set(-368, 267, 398);
+            
+
+            var scene = new THREE.Object3D();
+            //scene.background = new Color("skyblue");
+            scene.add(camera); 
+
+            window.addEventListener('resize', function() { 
+                var WIDTH = window.innerWidth, HEIGHT = window.innerHeight; 
+                renderer.setSize(WIDTH, HEIGHT); 
+                camera.aspect = WIDTH / HEIGHT; 
+                camera.updateProjectionMatrix(); 
+            }); 
+
+            var lightOne = new THREE.AmbientLight(0xffff, 5);
+            lightOne.position.set(-300, 200, 300);
+            scene.add(lightOne); 
+
+            var lightTwo=new THREE.PointLight(0xfffff, 5); 
+            lightTwo.position.set(-350, 290, 360); 
+            scene.add(lightTwo);
+
+            //var loader_texture = new THREE.TextureLoader(); 
+            //var horsematerial = new THREE.MeshLambertMaterial({map: loader_texture.load("https://raw.githack.com/mrdoob/three.js/dev/examples/textures/terrain/grasslight-big.jpg")});
+            
+            var GLTF = new THREE.GLTFLoader();
+             
+            GLTF.load("https://raw.githack.com/mrdoob/three.js/dev/examples/models/gltf/Horse.glb", function(mesh){
+                           
+                flower = mesh.scene;
+                //GLTF.setMaterials(horsematerial);
+                flower.traverse(function(obj){
+                    if (obj.isMesh) {
+                        flower.castShadow = true;
+                        flower.receiveShadow = true;
+                    }
+                });
+
+                flower.position.set(-100, -20, 300); 
+
+                scene.add(flower);
+            });
+
+            console.log(camera.position); 
+             
+
+            controls = new THREE.OrbitControls(camera,renderer.domElement); 
+            controls.autoRotate = true;
+
+
+            requestAnimationFrame(render);
+
+            function render() {
+
+                controls.update(); 
+                renderer.render(scene, camera);
+                 
+                
+                requestAnimationFrame(render);
+
+                
+            }
+        </script>
+    </body>
+</html>

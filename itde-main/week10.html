@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head><title>OrbitControls</title></head>
+    <body>
+        <script src="https://threejs.org/build/three.js"></script>
+        <script src="https://raw.githack.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js"></script>
+        <a-scene>
+            <script>
+                scene = new THREE.Scene(); 
+                var WIDTH = window.innerWidth, HEIGHT = window.innerHeight; 
+                
+                renderer = new THREE.WebGLRenderer({antialias: true}); 
+                renderer.setSize(WIDTH, HEIGHT); 
+                document.body.appendChild(renderer.domElement); 
+                
+                camera  =  new  THREE.PerspectiveCamera(45, WIDTH / HEIGHT,  0.1, 20000); 
+                camera.position.set(0, 6, 0); 
+                scene.add(camera); 
+                
+                window.addEventListener('resize', function() { 
+                    var WIDTH = window.innerWidth, HEIGHT = window.innerHeight; 
+                    renderer.setSize(WIDTH, HEIGHT); 
+                    camera.aspect = WIDTH / HEIGHT; 
+                    camera.updateProjectionMatrix(); 
+                }); 
+                
+                renderer.setClearColor(0x333F47, 1); 
+                
+                var light = new THREE.PointLight(0xffffff); 
+                light.position.set(-100, 200, 100); 
+                scene.add(light); 
+
+                var texture_1 = new THREE.TextureLoader().load('https://raw.githack.com/mrdoob/three.js/dev/examples/textures/lava/lavatile.jpg');
+                var texture_2 = new THREE.TextureLoader().load('https://raw.githack.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg');
+                var texture_3 = new THREE.TextureLoader().load('https://raw.githack.com/mrdoob/three.js/dev/examples/textures/planets/earth_lights_2048.png');
+                var texture_4 = new THREE.TextureLoader().load('https://raw.githack.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg');
+                var texture_5 = new THREE.TextureLoader().load('https://raw.githack.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg');
+
+                var oct_1 = new THREE.OctahedronGeometry(3);
+                var oct_1_material = new THREE.MeshLambertMaterial({map: texture_2});
+                var oct_1_mesh = new THREE.Mesh(oct_1, oct_1_material);
+                oct_1_mesh.position.set(10, -5, -6);
+                scene.add(oct_1_mesh);
+
+                var oct_2 = new THREE.OctahedronGeometry(3);
+                var oct_2_material = new THREE.MeshLambertMaterial({map: texture_3});
+                var oct_2_mesh = new THREE.Mesh(oct_2, oct_2_material);
+                oct_2_mesh.position.set(0, -5, -14);
+                scene.add(oct_2_mesh);
+
+                var oct_3 = new THREE.OctahedronGeometry(3);
+                var oct_3_material = new THREE.MeshLambertMaterial({map: texture_4});
+                var oct_3_mesh = new THREE.Mesh(oct_3, oct_3_material);
+                oct_3_mesh.position.set(-10, -5, -6);
+                scene.add(oct_3_mesh);
+
+                var oct_4 = new THREE.OctahedronGeometry(3);
+                var oct_4_material = new THREE.MeshLambertMaterial({map: texture_5});
+                var oct_4_mesh = new THREE.Mesh(oct_4, oct_4_material);
+                oct_4_mesh.position.set(0, -5, 4);
+                scene.add(oct_4_mesh);
+
+                var cylgeometry = new THREE.CylinderGeometry(3, 3, 7, 7); 
+                var cylmaterial = new THREE.MeshLambertMaterial({map: texture_1}); 
+                var cylmesh = new THREE.Mesh(cylgeometry, cylmaterial); 
+                cylmesh.position.set(0.9, -5, -6); 
+                scene.add(cylmesh); 
+                
+                controls = new THREE.OrbitControls(camera,renderer.domElement); 
+   
+                function animate() {  
+                    oct_1_mesh.rotation.y += 0.1; 
+                    oct_2_mesh.rotation.y -= 0.1; 
+                    oct_3_mesh.rotation.y += 0.1;
+                    oct_4_mesh.rotation.y -= 0.1;  
+                    
+                    controls.update(); 
+                    renderer.render(scene, camera); 
+                    requestAnimationFrame(animate); 
+                }
+     
+                animate();
+            </script>
+        </a-scene>
+    </body>
+</html>
