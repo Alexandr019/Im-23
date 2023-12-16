@@ -1,0 +1,29 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <script src="./Lab5.js"></script>
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: assets/markers/custom_conoha/conoha.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <a-entity mindar-image-target="targetIndex: 0" >
+            <a-camera position="0 0 300" cursor-visible="true" cursor-scale="2" cursor-color="#0095DD" cursor-opacity="1.5" wasd-controls="acceleration: 5000"></a-camera>
+        <a-entity geometry="primitive: sphere; radius: 20.510" material="src: url(https://ak.picdn.net/shutterstock/videos/366016/thumb/1.jpg)" planet="dist: 0; mass: 1.9885e30; name: Sun"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 2.4397" material="src: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0763947-6f42-4d09-944f-c2d6f41c415b/dcaig77-18800e1e-24aa-43e5-9dd0-3dff9bcf8d0c.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2UwNzYzOTQ3LTZmNDItNGQwOS05NDRmLWMyZDZmNDFjNDE1YlwvZGNhaWc3Ny0xODgwMGUxZS0yNGFhLTQzZTUtOWRkMC0zZGZmOWJjZjhkMGMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.TLHMNUPdW5unEpvHhX2wn8iRLpHN15hcMvFLWtmXWyE)" planet="dist: 57.909227e9; mass: 3.33022e23; T: 87.969; name: Mercury"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 6.0518" material="src: url(https://upload.wikimedia.org/wikipedia/commons/7/72/Venus_map_NASA_JPL_Magellan-Venera-Pioneer.jpg)" planet="dist: 108.208930e9; mass: 4.8675e24; T: 224.701; name: Venus"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 6.371" material="src: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/cafdcc53-fae4-451f-b3ad-6c5292380062/dfmp8hq-eed719a4-3cd7-4140-b8b6-b3266d29e193.jpg/v1/fit/w_720,h_359,q_70,strp/earth_map__texture__by_freedommbc_dfmp8hq-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzU5IiwicGF0aCI6IlwvZlwvY2FmZGNjNTMtZmFlNC00NTFmLWIzYWQtNmM1MjkyMzgwMDYyXC9kZm1wOGhxLWVlZDcxOWE0LTNjZDctNDE0MC1iOGI2LWIzMjY2ZDI5ZTE5My5qcGciLCJ3aWR0aCI6Ijw9NzIwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.kr44213l7IVn8RzviypuoOqkD0uQxBcH-P_QFAHDDRg)" planet="dist: 149.598261e9; mass: 5.9726e24; T: 365.25; name: Earth"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 3.3895" material="src: url(https://media.istockphoto.com/photos/alien-planet-with-craters-4-picture-id488156684?k=20&m=488156684&s=612x612&w=0&h=8zrGm0ZWUUcFvsSzR2AhflXe1IM6sxXDabrd4yeY8Nc=)" planet="dist: 227.94382e9; mass: 6.4171e23; T: 686.98; name: Mars"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 69.911" material="src: url(https://upload.wikimedia.org/wikipedia/commons/5/5e/Solarsystemscope_texture_8k_jupiter.jpg)" planet="dist: 778.5472e9; mass: 1.8982e27; T: 4332.589; name: Jupiter"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 58.232" material="src: url(https://upload.wikimedia.org/wikipedia/commons/1/1e/Solarsystemscope_texture_8k_saturn.jpg)" planet="dist: 1.429394069e12; mass: 5.6846e26; T: 10759.22; name: Saturn"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 25.362" material="src: url(https://upload.wikimedia.org/wikipedia/commons/9/95/Solarsystemscope_texture_2k_uranus.jpg)" planet="dist: 2.876679082e12; mass: 8.6810e25; T: 30688.5; name: Uranus"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 24.622" material="src: url(https://upload.wikimedia.org/wikipedia/commons/1/1e/Solarsystemscope_texture_2k_neptune.jpg)" planet="dist: 4.503443661e12; mass: 10.02413e25; T: 60195.0; name: Neptune"></a-entity>
+        <a-entity main></a-entity>
+        </a-entity>
+    </a-scene>
+  </body>
+</html>
