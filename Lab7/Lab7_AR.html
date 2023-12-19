@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+   <script src="./Lab7.js"></script>
+</head>
+<body>
+   <a-scene>
+   <a-marker type="pattern" url="assets/markers/rutherford/rutherford.patt">
+
+      <a-sphere id="lithium"
+               scale="0.03 0.03 0.03"
+               position="0 0 0" 
+			   radius="3.0"
+               geometry="primitive: sphere; radius: 3.0"
+			   material="src: url(assets/images/perlin-512.png);">
+
+		 <a-sphere
+			id="electron1"
+			animationRadius="4"
+			animationSpeed="0.5"
+			radius="0.5"
+			color="blue"
+			geometry="primitive: sphere; radius: 0.5; segments-height: 15;">
+		</a-sphere>
+
+		<a-sphere
+			id="electron2"
+			animationRadius="8"
+			animationSpeed="0.3"
+			radius="1.0"
+			color="yellow"
+			geometry="primitive: sphere; radius: 1.0; segments-height: 18;">
+		</a-sphere>
+
+		<a-sphere
+			id="electron3"
+			animationRadius="11"
+			animationSpeed="0.2"
+			radius="1.5"
+			color="green"
+			geometry="primitive: sphere; radius: 1.5; segments-height: 21;">
+		</a-sphere>
+
+
+         <a-torus position="0 0 0" radius="5" radius-tubular="0.1" rotation="45 90 0" color="black"></a-torus>
+         <a-torus position="0 0 0" radius="8" radius-tubular="0.1" rotation="0 90 0" color="black"></a-torus>
+         <a-torus position="0 0 0" radius="11" radius-tubular="0.1" rotation="90 00 0" color="black"></a-torus>
+      </a-sphere>
+      <a-camera position="0 0.5 2"></a-camera>
+	  </a-marker>
+   </a-scene>
+</body>
+</html>
