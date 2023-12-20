@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+		<script src="./Lib/tensorflow/tf.min.js"></script>
+		<script src="./Lib/tensorflow/teachablemachine-image.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection@2.0.1"> </script>
+		<style>
+				body {
+					margin: 0;
+					overflow: hidden;
+				}
+
+				#text {
+					position: absolute;
+					top: 10px;
+					left: 10px;
+					color: black;
+					font-size: 12px;
+					z-index: 0;
+				}
+		</style>
+
+		<script type="module" src="./Lab10.js"></script>
+	</head>
+	<body>
+		<div style="position: absolute;" id="text"></div>
+	</body>
+</html>
