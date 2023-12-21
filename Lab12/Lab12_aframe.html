@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+		<script src="./Lib/arjs/aframe-ar.js"></script>
+		<script src="./Lib/arjs/ar-threex-location-only.js"></script>
+	</head>
+	<body>
+		<a-scene arjs>
+		    <a-camera gps-new-camera="gpsMinDistance: 5"></a-camera>
+			<a-entity material="color: blue" geometry="primitive: box" gps-new-entity-place="latitude: 47.903352; longitude: 33.335807" scale="0.5 0.5 0.5"></a-entity>
+		    <a-entity material="color: green" geometry="primitive: box" gps-new-entity-place="latitude: 47.9033344 longitude: 33.3355662" scale="0.5 0.5 0.5"></a-entity>
+		    <a-entity material="color: red" geometry="primitive: box" gps-new-entity-place="latitude: 47.9034436; longitude: 33.356037" scale="0.5 0.5 0.5"></a-entity>
+		</a-scene>
+	</body>
