@@ -56,7 +56,7 @@ async function initAR() {
     scene.add(main);
 
     const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 20);
-    camera.position.set(0, 0, 0);
+    camera.position.set(0, 0, 2);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -68,6 +68,21 @@ async function initAR() {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
+
+    // Create XR Controller
+    const controller = renderer.xr.getController(0);
+    scene.add(controller);
+
+    // Update object position based on controller input
+    controller.addEventListener('selectstart', onSelectStart);
+
+    function onSelectStart(event) {
+        const object = event.target.userData.selectedObject;
+        // Update the position or perform any interaction logic here
+    }
+
+    // Set the object you want to interact with
+    controller.userData.selectedObject = lithium; // Set the object you want to interact with
 
     function animate() {
         if (xrButton.isPresenting) {
