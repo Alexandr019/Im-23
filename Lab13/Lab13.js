@@ -55,7 +55,7 @@ async function initAR() {
     scene.add(main);
 
     const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 20);
-    camera.position.set(0, 3, 1);
+    camera.position.set(0, -3, -1);
     camera.lookAt(new THREE.Vector3(0, -3, -1));
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
