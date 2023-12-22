@@ -11,13 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function initAR() {
     const xrButton = ARButton.createButton(new THREE.WebGLRenderer());
+    console.log("AR initialized:", xrButton.isPresenting);
     document.body.appendChild(xrButton);
 
     const scene = new THREE.Scene();
 
     const lithiumGeometry = new THREE.SphereGeometry(0.3, 30, 30);
     const lithiumMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('assets/images/perlin-512.png') });
-    const lithium= new THREE.Mesh(lithiumGeometry, lithiumMaterial);
+    const lithium = new THREE.Mesh(lithiumGeometry, lithiumMaterial);
     scene.add(lithium);
 
     const electron1 = createElectron(0.5, 0.05, 0.05, 0x0000FF);
@@ -26,16 +27,16 @@ async function initAR() {
     electron1.position.setZ(0.4 * Math.sin(Math.PI / 2));
     scene.add(electron1);
 
-    const electron2 = createElectron(0.8, 0.03, 0.1, 0xFFFF00);  
+    const electron2 = createElectron(0.8, 0.03, 0.1, 0xFFFF00);
     electron2.position.set(0.8, 0, 0);
     scene.add(electron2);
 
-    const electron3 = createElectron(1.1, 0.02, 0.15, 0x00FF00);  
+    const electron3 = createElectron(1.1, 0.02, 0.15, 0x00FF00);
     electron3.position.set(1.1, 0, 0);
     electron3.rotation.x = Math.PI / 2;
     scene.add(electron3);
 
-    addOrbit(scene, 0.5, 0x000000,  0, 0, 0);
+    addOrbit(scene, 0.5, 0x000000, 0, 0, 0);
     addOrbit(scene, 0.8, 0x000000, 0, Math.PI / 2);
     addOrbit(scene, 1.1, 0x000000, Math.PI / 2, 0, 0);
 
@@ -55,12 +56,18 @@ async function initAR() {
     scene.add(main);
 
     const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 20);
-    camera.position.set(0, -3, -1);
-    camera.lookAt(new THREE.Vector3(0, -3, -1));
+    camera.position.set(0, 0, 0);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
 
     function animate() {
         if (xrButton.isPresenting) {
