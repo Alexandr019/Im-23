@@ -3,53 +3,47 @@ import { ARButton } from './Lib/webxr/ARButton.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 20);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     document.body.appendChild(renderer.domElement);
 
-    const lithiumGeometry = new THREE.SphereGeometry(0.03, 15, 15);
+    const lithiumGeometry = new THREE.SphereGeometry(0.3, 30, 30);
     const lithiumMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('assets/images/perlin-512.png') });
     const lithium = new THREE.Mesh(lithiumGeometry, lithiumMaterial);
     scene.add(lithium);
 
-    const electron1 = createElectron(0.05, 0.05, 0.02, 0x0000FF);
-    electron1.position.setX(0.04 * Math.cos(Math.PI / 2));
-    electron1.position.setY(0.04 * Math.cos(Math.PI / 4));
-    electron1.position.setZ(0.04 * Math.sin(Math.PI / 2));
+    const electron1 = createElectron(0.5, 0.05, 0.05, 0x0000FF);
+    electron1.position.setX(0.4 * Math.cos(Math.PI / 2));
+    electron1.position.setY(0.4 * Math.cos(Math.PI / 4));
+    electron1.position.setZ(0.4 * Math.sin(Math.PI / 2));
     scene.add(electron1);
 
-    const electron2 = createElectron(0.08, 0.03, 0.04, 0xFFFF00);
-    electron2.position.set(0.08, 0, 0);
+    const electron2 = createElectron(0.8, 0.03, 0.1, 0xFFFF00);
+    electron2.position.set(0.8, 0, 0);
     scene.add(electron2);
 
-    const electron3 = createElectron(0.11, 0.02, 0.06, 0x00FF00);
-    electron3.position.set(0.11, 0, 0);
+    const electron3 = createElectron(1.1, 0.02, 0.15, 0x00FF00);
+    electron3.position.set(1.1, 0, 0);
     electron3.rotation.x = Math.PI / 2;
     scene.add(electron3);
 
-    addOrbit(scene, 0.05, 0x000000, 0, 0, 0);
-    addOrbit(scene, 0.08, 0x000000, 0, Math.PI / 2);
-    addOrbit(scene, 0.11, 0x000000, Math.PI / 2, 0, 0);
+    addOrbit(scene, 0.5, 0x000000, 0, 0, 0);
+    addOrbit(scene, 0.8, 0x000000, 0, Math.PI / 2);
+    addOrbit(scene, 1.1, 0x000000, Math.PI / 2, 0, 0);
 
-    const skyGeometry = new THREE.SphereGeometry(1, 15, 15);
+    const skyGeometry = new THREE.SphereGeometry(10, 30, 30);
     const skyMaterial = new THREE.MeshBasicMaterial({ color: 0x293134FF });
     const sky = new THREE.Mesh(skyGeometry, skyMaterial);
     scene.add(sky);
 
-    const planeGeometry = new THREE.PlaneGeometry(1, 1);
-    const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x8F8F8F, side: THREE.DoubleSide });
-    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    plane.rotation.x = -Math.PI / 2;
-    plane.position.y = -0.2;
-    scene.add(plane);
 
     const main = createMain();
     scene.add(main);
 
-    camera.position.set(0, 0.3, 0.1);
+    camera.position.set(0, 3, 1);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     const arButton = ARButton.createButton(renderer, {
