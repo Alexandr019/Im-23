@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const main = createMain();
     scene.add(main);
 
-    camera.position.set(-3, 0, -0.5);
+    camera.position.set(0, -3, -1);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     const arButton = ARButton.createButton(renderer, {
