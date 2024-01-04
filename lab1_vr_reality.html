@@ -1,0 +1,99 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script>
+
+        AFRAME.registerComponent('tor', {
+            schema: {
+                Oy_up: {type: 'number', default: 5},	//граничні координати зсуву торусів вгору по Оу
+                Ox_right: {type: 'array', default: [7.456, -0.024]}, //граничні координати зсуву торусів вправо по Ох для непарних та парних 
+                Ox_init: {type: 'number', default: -7.453}, 
+                Oy_init: {type: 'array', default: [2.74252, 2.44867, 2.16092, 1.85041, 1.46458, 1.10107, 0.68829]},
+                speed: {type: 'array', default: [0.2, 0.17, 0.14, 0.11, 0.07, 0.05, 0.03]}
+            }
+        });
+
+
+        AFRAME.registerComponent('main', 
+        {
+
+            init: function() {
+                this.hanoi_tower = document.querySelectorAll('[tor]');
+
+            },
+
+            tick: function(time, deltaTime)
+            {
+                //const dt = 0.1; //крок зсуву
+        
+                for(var i = 0; i < this.hanoi_tower.length; i++) {
+
+                    torus_i = this.hanoi_tower[i].getAttribute('tor'); 
+                    
+                    torus_i_position = this.hanoi_tower[i].getAttribute('position');
+
+                    dt = torus_i.speed[i];
+
+                    if ((torus_i_position.x == torus_i.Ox_init) && (torus_i_position.y <= torus_i.Oy_up)) {
+                        torus_i_position.y += dt;
+                    }
+
+                    if (torus_i_position.y >= torus_i.Oy_up) {
+                        
+                        torus_i_position.y = torus_i.Oy_up;
+                        torus_i_position.x += dt;
+                    }
+
+                    if (i % 2 == 0) {
+                        if (torus_i_position.x >= torus_i.Ox_right[0]) {
+                            torus_i_position.x = torus_i.Ox_right[0];
+
+                            if (torus_i_position.y >= torus_i.Oy_init[i]) {
+                                torus_i_position.y -= dt;
+                            }
+
+                        }
+                
+                    } else {
+                        if (torus_i_position.x >= torus_i.Ox_right[1]) {
+                            torus_i_position.x = torus_i.Ox_right[1];
+                            
+                        }
+
+                        if (torus_i_position.y >= torus_i.Oy_init[i] && torus_i_position.x == torus_i.Ox_right[1]) {
+                                torus_i_position.y -= dt;
+                                
+                        }
+
+                    }
+             
+                }
+
+            }
+        }); 
+    </script>
+   
+  </head>
+  <body>
+    <a-scene>
+        <a-camera position="0.29652 4.80953 21.48722" cursor-visible="true" cursor-scale="2" cursor-color="#0095DD" cursor-opacity="1.5" wasd-controls="acceleration: 500" camera="" rotation="-9.44865 6.67811 0" look-controls="" data-aframe-inspector-original-camera=""></a-camera>
+        <a-sky color="white" radius="4700"></a-sky>
+        <a-entity geometry="primitive: torus; radius: 0.49; radiusTubular: 0.07" rotation="-89.56 0 0" position="-7.453 2.74252 6.205" material="color: #FF0000" tor></a-entity>
+        <a-entity geometry="primitive: torus; radius: 0.69; radiusTubular: 0.11" rotation="-89.56 0 0" position="-7.453 2.44867 6.205" material="color: #FF7F00" tor></a-entity>
+        <a-entity geometry="primitive: torus; radius: 1.02; radiusTubular: 0.11" rotation="-89.56 0 0" position="-7.453 2.16092 6.205" material="color: #FFFF00" tor></a-entity>
+        <a-entity geometry="primitive: torus; radius: 1.33; radiusTubular: 0.12" rotation="-89.56 0 0" position="-7.453 1.85041 6.205" material="color: #00FF00" tor></a-entity>
+        <a-entity geometry="primitive: torus; radius: 1.62; radiusTubular: 0.12" rotation="-89.56 0 0" position="-7.453 1.46458 6.205" material="color: #0000FF" tor></a-entity>
+        <a-entity geometry="primitive: torus; radius: 1.97; radiusTubular: 0.13" rotation="-89.56 0 0" position="-7.453 1.10107 6.205" material="color: #4B0082" tor></a-entity>
+        <a-entity geometry="primitive: torus; radius: 2.32; radiusTubular: 0.14" rotation="-89.56 0 0" position="-7.453 0.68829 6.205" material="color: #9400D3" tor></a-entity>
+        <a-entity geometry="primitive: cylinder; height: 0.3; radius: 3.46" material="color: #000000" position="-7.453 0.23435 6.205"></a-entity>
+        <a-entity geometry="primitive: cylinder; height: 3.67; radius: 0.31" material="color: #000000" position="-7.481 2.249 6.232"></a-entity>
+        <a-entity geometry="primitive: cylinder; height: 0.3; radius: 3.46" material="color: #000000" position="-0.04555 0.23435 6.205"></a-entity>
+        <a-entity geometry="primitive: cylinder; height: 3.67; radius: 0.31" material="color: #000000" position="-0.01562 2.249 6.232"></a-entity>
+        <a-entity geometry="primitive: cylinder; height: 0.3; radius: 3.46" material="color: #000000" position="7.35332 0.23435 6.205"></a-entity>
+        <a-entity geometry="primitive: cylinder; height: 3.67; radius: 0.31" material="color: #000000" position="7.45874 2.249 6.232"></a-entity>
+        <a-entity main></a-entity>
+    </a-scene>
+    
+  </body>
+</html>
